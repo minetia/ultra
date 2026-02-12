@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEXUS ULTRA - AI QUANT TERMINAL</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <link rel="stylesheet" href="pro-style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="ultra-header">
+            <div class="brand">
+                <i class="fas fa-biohazard fa-spin" style="color:var(--neon); font-size:1.2rem;"></i>
+                <div class="brand-text">
+                    <h1>NEXUS ULTRA</h1>
+                    <span class="engine-ver">HYBRID ENGINE v9.0</span>
+                </div>
+            </div>
+            <div class="api-status">
+                <span id="coingecko-status" class="status-pill"><i class="fas fa-gears"></i> Gecko API</span>
+                <span id="upbit-status" class="status-pill"><i class="fas fa-bolt"></i> Upbit WS</span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card info-card">
+                <div class="coin-selector">
+                    <img id="coin-logo" src="" alt="coin" style="display:none;">
+                    <select id="market-select" onchange="changeMarket(this.value)">
+                        <option value="KRW-BTC">Bitcoin (BTC)</option>
+                        <option value="KRW-ETH">Ethereum (ETH)</option>
+                        <option value="KRW-XRP">Ripple (XRP)</option>
+                        <option value="KRW-SOL">Solana (SOL)</option>
+                        <option value="KRW-DOGE">Dogecoin (DOGE)</option>
+                        <option value="KRW-ZRX">0x (ZRX)</option>
+                    </select>
+                </div>
+                <div class="price-display">
+                    <div id="live-price" class="main-price">---</div>
+                    <div id="price-change" class="sub-price">0.00%</div>
+                </div>
+                <div class="market-stats">
+                    <div class="stat-row">
+                        <span>고가(High)</span> <span id="high-price">---</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>저가(Low)</span> <span id="low-price">---</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>거래량(Vol)</span> <span id="volume-24h">---</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card control-card">
+                <div class="balance-info">
+                    <div class="label">ESTIMATED BALANCE</div>
+                    <div id="total-balance" class="balance-val">50,000,000 <span class="unit">KRW</span></div>
+                    <div id="pnl-display" class="pnl-val">0 KRW (0.00%)</div>
+                </div>
+                <div class="control-btns">
+                    <button id="btn-start" onclick="toggleSystem()" class="btn-neon">
+                        <i class="fas fa-power-off"></i> SYSTEM ENGAGE
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card chart-card">
+            <div id="tv_chart"></div>
+        </div>
+
+        <div class="data-grid">
+            <div class="card orderbook-card">
+                <div class="card-head"><i class="fas fa-list-ol"></i> ORDERBOOK L2</div>
+                <div class="ob-header">
+                    <span>Price</span><span>Size</span>
+                </div>
+                <div id="ob-list" class="ob-list">
+                    </div>
+                <div class="ob-ratio">
+                    <div id="bid-ratio" class="ratio-bar bid" style="width:50%"></div>
+                    <div id="ask-ratio" class="ratio-bar ask" style="width:50%"></div>
+                </div>
+            </div>
+
+            <div class="card log-card">
+                <div class="card-head"><i class="fas fa-brain"></i> NEURAL DECISION LOG</div>
+                <div id="terminal-content" class="terminal-content">
+                    <div class="log-line sys">Welcome to NEXUS ULTRA.</div>
+                    <div class="log-line sys">Waiting for market data stream...</div>
+                </div>
+                <div class="ai-indicators">
+                    <div class="ind-box">
+                        <span>RSI</span>
+                        <strong id="val-rsi">--</strong>
+                    </div>
+                    <div class="ind-box">
+                        <span>POWER</span>
+                        <strong id="val-power">--</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card trade-card">
+                <div class="card-head"><i class="fas fa-exchange-alt"></i> REAL-TIME FEED</div>
+                <div id="trade-list" class="trade-list">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="overlay">
+        <div class="scanner"></div>
+        <div class="loading-text">CONNECTING TO EXCHANGES...</div>
+    </div>
+
+    <script src="pro-script.js"></script>
+</body>
+</html>
